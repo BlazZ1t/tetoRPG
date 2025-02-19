@@ -1,0 +1,48 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "teto.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480,
+                "y": 496
+            }
+        },
+        "tetoRPG_map.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 405,
+                "y": 223
+            }
+        },
+        "tetoRPG_map.tmx#TetoTileSet": {
+            "scaleInDock": 1
+        },
+        "tetoTileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "D:/VsCodeProjects/TetoRPG/maps",
+    "last.imagePath": "D:/VsCodeProjects/TetoRPG/maps",
+    "map.lastUsedExportFilter": "Lua files (*.lua)",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "tetoRPG_map.tmx"
+    ],
+    "project": "teto_rpg.tiled-project",
+    "recentFiles": [
+        "tetoRPG_map.tmx",
+        "tetoTileset.tsx",
+        "teto.tmx"
+    ],
+    "tileset.embedInMap": true
+}
