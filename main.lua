@@ -3,7 +3,7 @@
 -- VIRTUAL_WIDTH, VIRTUAL_HEIGHT = 1920 * 0.8, 1080 * 0.8
 
 function love.load()
-    --Add required variables
+    --Add required libraries
     anim8 = require 'libraries/anim8'
     sti = require 'libraries/sti'
     push = require('libraries.push')
