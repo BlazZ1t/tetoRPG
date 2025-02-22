@@ -5,7 +5,7 @@
 function love.load()
     --Add required libraries
     anim8 = require 'libraries/anim8'
-    sti = require 'libraries/sti'
+    sti = require 'libraries/sti' 
     push = require('libraries.push')
     camera = require('libraries.camera')
     
@@ -41,7 +41,7 @@ function love.load()
     teto.pear_grid = anim8.newGrid(32, 48, teto.pear_sprite_sheet:getWidth(), teto.pear_sprite_sheet:getHeight())
     teto.x = 200
     teto.y = 150
-    teto.speed = 30
+    teto.speed = 10
 
 
     teto.animations = {}
@@ -147,8 +147,8 @@ function love.draw()
     -- push:start()
     cam:attach()
         gameMap:drawLayer(gameMap.layers["Слой тайлов 1"])
-        teto.anim:draw(teto.current_sprite_sheet, teto.x, teto.y, nil, 1)
-        miku.anim:draw(miku.attack_sprite_sheet, 960, 530, nil, 1)
+        teto.anim:draw(teto.current_sprite_sheet, teto.x, teto.y, nil, 3.5, 3.5, 16, 24)
+        miku.anim:draw(miku.attack_sprite_sheet, 960, 530, nil, 3, 3, 16, 24)
     cam:detach()
         -- push:finish()
 end
