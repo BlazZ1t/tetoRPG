@@ -1,0 +1,93 @@
+function basicMovement(teto, dt)
+    local isMoving = false
+    if teto.isPear then
+        teto.current_sprite_sheet = teto.pear_sprite_sheet
+    else
+        teto.current_sprite_sheet = teto.sprite_sheet
+    end
+    --Check movement inputs as well as pear form input
+    if love.keyboard.isDown("w") then
+        isMoving = true
+        teto.direction = "up"
+        teto.y = teto.y - teto.speed
+        if teto.isPear then
+            teto.anim = teto.animations.pear_up
+        else
+            teto.anim = teto.animations.up
+        end
+    end
+
+    if love.keyboard.isDown("s") then
+        isMoving = true
+        teto.direction = "down"
+        teto.y = teto.y + teto.speed
+        if teto.isPear then
+            teto.anim = teto.animations.pear_down
+        else
+            teto.anim = teto.animations.down
+        end
+    end
+
+    if love.keyboard.isDown("d") then
+        isMoving = true
+        teto.direction = "right"
+        teto.x = teto.x + teto.speed
+        if teto.isPear then
+            teto.anim = teto.animations.pear_right
+        else
+            teto.anim = teto.animations.right
+        end
+    end
+
+    if love.keyboard.isDown("a") then
+        isMoving = true
+        teto.direction = "left"
+        teto.x = teto.x - teto.speed
+        if teto.isPear then
+            teto.anim = teto.animations.pear_left
+        else
+            teto.anim = teto.animations.left
+        end
+    end
+
+    function love.keypressed( key )
+        if key == "space" then
+            teto.isPear = not teto.isPear
+        end
+    end
+
+    if isMoving == false then
+        if teto.isPear then
+            if teto.direction == "left" then
+                teto.anim = teto.animations.pear_left
+            end
+            if teto.direction == "right" then
+                teto.anim = teto.animations.pear_right
+            end
+            if teto.direction == "up" then
+                teto.anim = teto.animations.pear_up
+            end
+            if teto.direction == "down" then
+                teto.anim = teto.animations.pear_down
+            end
+        else
+            if teto.direction == "left" then
+                teto.anim = teto.animations.left
+            end
+            if teto.direction == "right" then
+                teto.anim = teto.animations.right
+            end
+            if teto.direction == "up" then
+                teto.anim = teto.animations.up
+            end
+            if teto.direction == "down" then
+                teto.anim = teto.animations.down
+            end
+        end
+        teto.anim:gotoFrame(1)
+    end
+
+    teto.anim:update(dt)
+end
+
+return basicMovement

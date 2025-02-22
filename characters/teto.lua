@@ -23,9 +23,13 @@ function teto.getTeto()
     teto_table.current_sprite_sheet = teto_table.sprite_sheet
     teto_table.anim = teto_table.animations.right
 
+    teto.isPear = false
+
     teto_table.x = 200
     teto_table.y = 150
     teto_table.speed = 30
+
+    teto.direction = "right"
 
 
     return teto_table

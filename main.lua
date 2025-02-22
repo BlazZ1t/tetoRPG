@@ -10,6 +10,7 @@ function love.load()
     camera = require('libraries.camera')
     local characters = require('characters')
     local sounds = require('assets.sounds')
+    user_input = require('user_input')
     
     --Camera initializer
     cam = camera()
@@ -23,7 +24,7 @@ function love.load()
     --Load sound effects and music
     ost = sounds.getOST()
     sfx = sounds.getSFX()
-    ost.main_theme:play()
+    -- ost.main_theme:play()
 
     love.graphics.setDefaultFilter("nearest", "nearest")
     -- push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {fullscreen = false})
@@ -38,55 +39,8 @@ end
 
 function love.update(dt)
 
-    local isMoving = false
-    --Check movement inputs as well as pear form input
-    if love.keyboard.isDown("w") then
-        isMoving = true
-        teto.y = teto.y - teto.speed
-        if love.keyboard.isDown("space") then
-            teto.anim = teto.animations.pear_up
-            teto.current_sprite_sheet = teto.pear_sprite_sheet
-        else
-            teto.anim = teto.animations.up
-            teto.current_sprite_sheet = teto.sprite_sheet
-        end
-    end
+    user_input.basicMovement(teto, dt)
 
-    if love.keyboard.isDown("s") then
-        isMoving = true
-        teto.y = teto.y + teto.speed
-        if love.keyboard.isDown("space") then
-            teto.anim = teto.animations.pear_down
-            teto.current_sprite_sheet = teto.pear_sprite_sheet
-        else
-            teto.anim = teto.animations.down
-            teto.current_sprite_sheet = teto.sprite_sheet
-        end
-    end
-
-    if love.keyboard.isDown("d") then
-        isMoving = true
-        teto.x = teto.x + teto.speed
-        if love.keyboard.isDown("space") then
-            teto.anim = teto.animations.pear_right
-            teto.current_sprite_sheet = teto.pear_sprite_sheet
-        else
-            teto.anim = teto.animations.right
-            teto.current_sprite_sheet = teto.sprite_sheet
-        end
-    end
-
-    if love.keyboard.isDown("a") then
-        isMoving = true
-        teto.x = teto.x - teto.speed
-        if love.keyboard.isDown("space") then
-            teto.anim = teto.animations.pear_left
-            teto.current_sprite_sheet = teto.pear_sprite_sheet
-        else
-            teto.anim = teto.animations.left
-            teto.current_sprite_sheet = teto.sprite_sheet
-        end
-    end
     --Miku attack trigger (for now place enter to trigger)
     if love.keyboard.isDown("return") then
         sfx.miku_attack:play()
@@ -94,13 +48,11 @@ function love.update(dt)
         miku.anim = miku.animations.attack
     end
     --Set teto to frame 1 of the animation, if she is still
-    if isMoving == false then
-        teto.anim:gotoFrame(1)
-    end
+    
     if miku.isAttacking == false then
         miku.anim:gotoFrame(1)
     end
-    teto.anim:update(dt)
+    
     miku.anim:update(dt)
 
     cam:lookAt(teto.x, teto.y)
