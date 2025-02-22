@@ -5,7 +5,7 @@
 function love.load()
     --Add required libraries
     anim8 = require 'libraries/anim8'
-    sti = require 'libraries/sti'
+    sti = require 'libraries/sti' 
     push = require('libraries.push')
     camera = require('libraries.camera')
     local characters = require('characters')
@@ -30,8 +30,6 @@ function love.load()
 
 
     background = love.graphics.newImage('assets/images/background.png')
-    
-    --Initialize teto table. All the teto parameters are in there
     
     teto = characters.getTeto()
     miku = characters.getMiku()
@@ -112,8 +110,8 @@ function love.draw()
     -- push:start()
     cam:attach()
         gameMap:drawLayer(gameMap.layers["Слой тайлов 1"])
-        teto.anim:draw(teto.current_sprite_sheet, teto.x, teto.y, nil, 1)
-        miku.anim:draw(miku.attack_sprite_sheet, 960, 530, nil, 1)
+        teto.anim:draw(teto.current_sprite_sheet, teto.x, teto.y, nil, 3.5, 3.5, 16, 24)
+        miku.anim:draw(miku.attack_sprite_sheet, 960, 530, nil, 3, 3, 16, 24)
     cam:detach()
         -- push:finish()
 end
