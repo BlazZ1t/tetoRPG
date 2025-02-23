@@ -1,4 +1,4 @@
-function basicMovement(teto, dt)
+local function basicMovement(teto, dt)
     local isMoving = false
     if teto.isPear then
         teto.current_sprite_sheet = teto.pear_sprite_sheet
@@ -90,4 +90,34 @@ function basicMovement(teto, dt)
     teto.anim:update(dt)
 end
 
-return basicMovement
+local function basicCamera(teto, cam, dt)
+
+    cam:lookAt(teto.x, teto.y)
+    --Camera no longer goes outbound
+    local width = love.graphics.getWidth()
+    local height = love.graphics.getHeight()
+    
+    if  cam.x < width/2 then
+        cam.x = width/2
+    end
+
+    if  cam.y < height/2 then
+        cam.y = height/2
+    end
+
+    local mapWidth = gameMap.width * gameMap.tilewidth
+    local mapHeight = gameMap.height * gameMap.tileheight
+
+    if cam.x > (mapWidth - width/2) then
+        cam.x = (mapWidth - width/2)
+    end
+
+    if cam.y > (mapHeight - height/2) then
+        cam.y = (mapHeight - height/2)
+    end
+end
+
+return {
+    basicMovement = basicMovement,
+    basicCamera = basicCamera
+}
