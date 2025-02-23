@@ -1,17 +1,17 @@
 
 -- WINDOW_WIDTH, WINDOW_HEIGHT = 1920 * 0.8, 1080 * 0.8
--- VIRTUAL_WIDTH, VIRTUAL_HEIGHT = 1920 * 0.8, 1080 * 0.8
+VIRTUAL_WIDTH, VIRTUAL_HEIGHT = 1920 * 0.8, 1080 * 0.8
 
 function love.load()
     --Add required libraries
     anim8 = require 'libraries/anim8'
-    sti = require 'libraries/sti' 
+    sti = require 'libraries/sti'
     push = require('libraries.push')
     camera = require('libraries.camera')
     local characters = require('characters')
     local sounds = require('assets.sounds')
     user_input = require('user_input')
-    
+
     --Camera initializer
     cam = camera()
 
@@ -29,9 +29,6 @@ function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
     -- push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {fullscreen = false})
 
-
-    background = love.graphics.newImage('assets/images/background.png')
-    
     teto = characters.getTeto()
     miku = characters.getMiku()
 end
@@ -48,14 +45,38 @@ function love.update(dt)
         miku.anim = miku.animations.attack
     end
     --Set teto to frame 1 of the animation, if she is still
-    
+
     if miku.isAttacking == false then
         miku.anim:gotoFrame(1)
     end
-    
+
     miku.anim:update(dt)
 
     cam:lookAt(teto.x, teto.y)
+    
+    --Camera no longer goes outbound
+    local width = love.graphics.getWidth()
+    local height = love.graphics.getHeight()
+    
+    if  cam.x < width/2 then
+        cam.x = width/2
+    end
+
+    if  cam.y < height/2 then
+        cam.y = height/2
+    end
+
+    local mapWidth = gameMap.width * gameMap.tilewidth
+    local mapHeight = gameMap.height * gameMap.tileheight
+
+    if cam.x > (mapWidth - width/2) then
+        cam.x = (mapWidth - width/2)
+end
+
+if cam.y > (mapHeight - height/2) then
+    cam.y = (mapHeight - height/2)
+end
+
 end
 
 function love.draw()
