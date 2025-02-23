@@ -1,15 +1,20 @@
 local function basicMovement(teto, dt)
     local isMoving = false
+
+    vx = 0
+    vy = 0
+
     if teto.isPear then
         teto.current_sprite_sheet = teto.pear_sprite_sheet
     else
         teto.current_sprite_sheet = teto.sprite_sheet
+
     end
     --Check movement inputs as well as pear form input
     if love.keyboard.isDown("w") then
         isMoving = true
         teto.direction = "up"
-        teto.y = teto.y - teto.speed
+        vy = teto.speed * -1
         if teto.isPear then
             teto.anim = teto.animations.pear_up
         else
@@ -20,7 +25,7 @@ local function basicMovement(teto, dt)
     if love.keyboard.isDown("s") then
         isMoving = true
         teto.direction = "down"
-        teto.y = teto.y + teto.speed
+        vy = teto.speed
         if teto.isPear then
             teto.anim = teto.animations.pear_down
         else
@@ -31,7 +36,7 @@ local function basicMovement(teto, dt)
     if love.keyboard.isDown("d") then
         isMoving = true
         teto.direction = "right"
-        teto.x = teto.x + teto.speed
+        vx = teto.speed
         if teto.isPear then
             teto.anim = teto.animations.pear_right
         else
@@ -42,13 +47,17 @@ local function basicMovement(teto, dt)
     if love.keyboard.isDown("a") then
         isMoving = true
         teto.direction = "left"
-        teto.x = teto.x - teto.speed
+        vx = teto.speed * -1
         if teto.isPear then
             teto.anim = teto.animations.pear_left
         else
             teto.anim = teto.animations.left
         end
     end
+
+    teto.hitbox:setLinearVelocity (vx, vy)
+
+    
 
     function love.keypressed( key )
         if key == "space" then

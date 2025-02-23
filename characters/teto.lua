@@ -25,11 +25,19 @@ function teto.getTeto()
 
     teto.isPear = false
 
-    teto_table.x = 200
-    teto_table.y = 150
-    teto_table.speed = 30
+    
+    teto_table.x = 1000
+    teto_table.y = 500
+    teto_table.speed = 300
 
-    teto.direction = "right"
+-- Hitbox 
+    teto_table.hitbox = world:newBSGRectangleCollider(teto_table.x,teto_table.y, 80, 170, 10)
+
+
+-- idk but it's needed
+    teto_table.hitbox:setFixedRotation(true)
+
+    teto_table.direction = "right"
 
 
     return teto_table
