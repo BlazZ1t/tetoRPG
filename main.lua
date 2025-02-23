@@ -18,12 +18,12 @@ function love.load()
     --Set camera to the fullscreen and to the monitor dimensions
     love.window.setMode(0, 0)
 
-    --Load gamemap
-    gameMap = sti('assets/maps/12.lua')
+    gameMap = sti('assets/maps/GameMap.lua')
 
     --Load sound effects and music
     ost = sounds.getOST()
     sfx = sounds.getSFX()
+    sfx.miku_attack:setVolume(0.1)
     -- ost.main_theme:play()
 
     love.graphics.setDefaultFilter("nearest", "nearest")
@@ -62,6 +62,8 @@ function love.draw()
     -- push:start()
     cam:attach()
         gameMap:drawLayer(gameMap.layers["Слой тайлов 1"])
+        gameMap:drawLayer(gameMap.layers["river"])
+        gameMap:drawLayer(gameMap.layers["cheese"])
         teto.anim:draw(teto.current_sprite_sheet, teto.x, teto.y, nil, 3.5, 3.5, 16, 24)
         miku.anim:draw(miku.attack_sprite_sheet, 960, 530, nil, 3, 3, 16, 24)
     cam:detach()
