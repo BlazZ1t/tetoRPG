@@ -50,32 +50,9 @@ function love.update(dt)
         miku.anim:gotoFrame(1)
     end
 
+    user_input.basicCamera(teto, cam, dt)
+
     miku.anim:update(dt)
-
-    cam:lookAt(teto.x, teto.y)
-    
-    --Camera no longer goes outbound
-    local width = love.graphics.getWidth()
-    local height = love.graphics.getHeight()
-    
-    if  cam.x < width/2 then
-        cam.x = width/2
-    end
-
-    if  cam.y < height/2 then
-        cam.y = height/2
-    end
-
-    local mapWidth = gameMap.width * gameMap.tilewidth
-    local mapHeight = gameMap.height * gameMap.tileheight
-
-    if cam.x > (mapWidth - width/2) then
-        cam.x = (mapWidth - width/2)
-end
-
-if cam.y > (mapHeight - height/2) then
-    cam.y = (mapHeight - height/2)
-end
 
 end
 
