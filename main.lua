@@ -11,6 +11,10 @@ function love.load()
     local characters = require('characters')
     local sounds = require('assets.sounds')
     user_input = require('user_input')
+    wf = require ('libraries/windfield')
+
+    --initialize physics
+    world = wf.newWorld(0,0)
 
     --Camera initializer
     cam = camera()
@@ -38,6 +42,8 @@ function love.update(dt)
 
     user_input.basicMovement(teto, dt)
 
+    user_input.basicCamera(teto, cam, dt)
+
     --Miku attack trigger (for now place enter to trigger)
     if love.keyboard.isDown("return") then
         sfx.miku_attack:play()
@@ -50,9 +56,12 @@ function love.update(dt)
         miku.anim:gotoFrame(1)
     end
 
-    user_input.basicCamera(teto, cam, dt)
 
     miku.anim:update(dt)
+
+    world:update(dt)
+
+    teto.x, teto.y = teto.hitbox:getX(), teto.hitbox:getY()
 
 end
 
@@ -64,6 +73,8 @@ function love.draw()
         gameMap:drawLayer(gameMap.layers["cheese"])
         teto.anim:draw(teto.current_sprite_sheet, teto.x, teto.y, nil, 3.5, 3.5, 16, 24)
         miku.anim:draw(miku.attack_sprite_sheet, 960, 530, nil, 3, 3, 16, 24)
+        world:draw()
     cam:detach()
         -- push:finish()
+        
 end
