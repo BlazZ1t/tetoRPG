@@ -45,23 +45,23 @@ function love.update(dt)
     user_input.basicCamera(teto, cam, dt)
 
     --Miku attack trigger (for now place enter to trigger)
-    if love.keyboard.isDown("return") then
-        sfx.miku_attack:play()
-        miku.isAttacking = true
-        miku.anim = miku.animations.attack
-    end
-    --Set teto to frame 1 of the animation, if she is still
+    if miku.isAttacking then
+        miku.anim:update(dt)
 
-    if miku.isAttacking == false then
-        miku.anim:gotoFrame(1)
+        -- Check if the animation has ended
+        if miku.anim.position == #miku.anim.frames then
+            miku.isAttacking = false  -- Reset the attacking flag
+        end
     end
 
-
-    miku.anim:update(dt)
-
-    world:update(dt)
-
-    teto.x, teto.y = teto.hitbox:getX(), teto.hitbox:getY()
+    function love.keypressed( key )
+        if key == "return" then
+            sfx.miku_attack:play()
+            miku.isAttacking = true
+            miku.anim = miku.animations.attack
+            miku.anim:gotoFrame(1)
+        end
+    end
 
 end
 

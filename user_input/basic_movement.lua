@@ -124,6 +124,10 @@ local function basicCamera(teto, cam, dt)
     if cam.y > (mapHeight - height/2) then
         cam.y = (mapHeight - height/2)
     end
+
+    world:update(dt)
+
+    teto.x, teto.y = teto.hitbox:getX(), teto.hitbox:getY()
 end
 
 return {
