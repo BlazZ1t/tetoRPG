@@ -57,13 +57,6 @@ local function basicMovement(teto, dt)
 
     teto.hitbox:setLinearVelocity (vx, vy)
 
-    
-
-    function love.keypressed( key )
-        if key == "space" then
-            teto.isPear = not teto.isPear
-        end
-    end
 
     if isMoving == false then
         if teto.isPear then
@@ -94,10 +87,14 @@ local function basicMovement(teto, dt)
             end
         end
         teto.anim:gotoFrame(1)
+    else
+        print("Received movement input")
     end
 
+    
     teto.anim:update(dt)
 end
+
 
 local function basicCamera(teto, cam, dt)
 
