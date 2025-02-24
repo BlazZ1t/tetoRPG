@@ -54,14 +54,7 @@ function love.update(dt)
         end
     end
 
-    function love.keypressed( key )
-        if key == "return" then
-            sfx.miku_attack:play()
-            miku.isAttacking = true
-            miku.anim = miku.animations.attack
-            miku.anim:gotoFrame(1)
-        end
-    end
+    
 
 end
 
@@ -77,4 +70,19 @@ function love.draw()
     cam:detach()
         -- push:finish()
         
+end
+
+
+function love.keypressed( key )
+    if key == "return" then
+        sfx.miku_attack:play()
+        miku.isAttacking = true
+        miku.anim = miku.animations.attack
+        miku.anim:gotoFrame(1)
+    end
+
+    if key == "space" then
+        teto.isPear = not teto.isPear
+        print("Changed forms")
+    end
 end
