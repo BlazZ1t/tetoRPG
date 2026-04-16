@@ -1,0 +1,88 @@
+
+-- WINDOW_WIDTH, WINDOW_HEIGHT = 1920 * 0.8, 1080 * 0.8
+VIRTUAL_WIDTH, VIRTUAL_HEIGHT = 1920 * 0.8, 1080 * 0.8
+
+function love.load()
+    --Add required libraries
+    anim8 = require 'libraries/anim8'
+    sti = require 'libraries/sti'
+    push = require('libraries.push')
+    camera = require('libraries.camera')
+    local characters = require('characters')
+    local sounds = require('assets.sounds')
+    user_input = require('user_input')
+    wf = require ('libraries/windfield')
+
+    --initialize physics
+    world = wf.newWorld(0,0)
+
+    --Camera initializer
+    cam = camera()
+
+    --Set camera to the fullscreen and to the monitor dimensions
+    love.window.setMode(0, 0)
+
+    gameMap = sti('assets/maps/GameMap.lua')
+
+    --Load sound effects and music
+    ost = sounds.getOST()
+    sfx = sounds.getSFX()
+    sfx.miku_attack:setVolume(0.1)
+    -- ost.main_theme:play()
+
+    love.graphics.setDefaultFilter("nearest", "nearest")
+    -- push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {fullscreen = false})
+
+    teto = characters.getTeto()
+    miku = characters.getMiku()
+end
+
+
+function love.update(dt)
+
+    user_input.basicMovement(teto, dt)
+
+    user_input.basicCamera(teto, cam, dt)
+
+    --Miku attack trigger (for now place enter to trigger)
+    if miku.isAttacking then
+        miku.anim:update(dt)
+
+        -- Check if the animation has ended
+        if miku.anim.position == #miku.anim.frames then
+            miku.isAttacking = false  -- Reset the attacking flag
+        end
+    end
+
+    
+
+end
+
+function love.draw()
+    -- push:start()
+    cam:attach()
+        gameMap:drawLayer(gameMap.layers["Слой тайлов 1"])
+        gameMap:drawLayer(gameMap.layers["river"])
+        gameMap:drawLayer(gameMap.layers["cheese"])
+        teto.anim:draw(teto.current_sprite_sheet, teto.x, teto.y, nil, 3.5, 3.5, 16, 24)
+        miku.anim:draw(miku.attack_sprite_sheet, 960, 530, nil, 3, 3, 16, 24)
+        world:draw()
+    cam:detach()
+        -- push:finish()
+        
+end
+
+
+function love.keypressed( key )
+    if key == "return" then
+        sfx.miku_attack:play()
+        miku.isAttacking = true
+        miku.anim = miku.animations.attack
+        miku.anim:gotoFrame(1)
+    end
+
+    if key == "space" then
+        teto.isPear = not teto.isPear
+        print("Changed forms")
+    end
+end
